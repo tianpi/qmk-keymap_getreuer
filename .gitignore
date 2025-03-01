@@ -1,3 +1,4 @@
+*.uf2
 *.bin
 *.hex
 user_song_list.h
@@ -7,4 +8,3 @@ tools/qmk_song_player/song_test.js
 *.js.map
 **/node_modules
 **/package-lock.json
-
