@@ -164,31 +164,20 @@ uint16_t achordion_streak_chord_timeout(uint16_t tap_hold_keycode,
 
 // clang-format off
 const key_override_t* key_overrides[] = {
-    &ko_make_basic(MOD_MASK_SHIFT, KC_COMMA, KC_SEMICOLON),
-    &ko_make_basic(MOD_MASK_SHIFT, KC_DOT, KC_COLON),
-    &ko_make_basic(MOD_MASK_SHIFT, MT(MOD_LGUI, KC_DOT), KC_COLON),
-    &ko_make_basic(MOD_MASK_SHIFT, KC_LEFT_PAREN, KC_RIGHT_PAREN),
-    &ko_make_basic(MOD_MASK_SHIFT, MT(MOD_LSFT, KC_LEFT_PAREN), KC_RIGHT_PAREN),
-    &ko_make_basic(MOD_MASK_SHIFT, KC_LEFT_BRACKET, KC_RIGHT_BRACKET),
-    &ko_make_basic(MOD_MASK_SHIFT, KC_RIGHT_BRACKET, KC_RIGHT_BRACKET),
-    &ko_make_basic(MOD_MASK_SHIFT, KC_LEFT_CURLY_BRACE, KC_RIGHT_CURLY_BRACE),
-    &ko_make_basic(MOD_MASK_SHIFT, KC_EQUAL, KC_EQUAL),
-    &ko_make_basic(MOD_MASK_SHIFT, MT(MOD_LSFT, KC_EQUAL), KC_EQUAL),
-    &ko_make_basic(MOD_MASK_SHIFT, KC_PLUS, KC_MINUS),
-    &ko_make_basic(MOD_MASK_SHIFT, KC_ASTERISK, KC_SLASH),
-    &ko_make_basic(MOD_MASK_SHIFT, KC_SLASH, KC_BACKSLASH),
-    &ko_make_basic(MOD_MASK_SHIFT, KC_AMPERSAND, KC_PIPE),
-    &ko_make_basic(MOD_MASK_SHIFT, KC_LT, KC_GT),
-    &ko_make_basic(MOD_MASK_SHIFT, KC_EXCLAIM, KC_QUESTION),
-    &ko_make_basic(MOD_MASK_SHIFT, MT(MOD_RALT, KC_EXCLAIM), KC_QUESTION),
-    &ko_make_basic(MOD_MASK_SHIFT, KC_UNDERSCORE, KC_MINUS),
-    &ko_make_basic(MOD_MASK_SHIFT, LT(FUNFUN, KC_UNDERSCORE), KC_MINUS),
-    &ko_make_basic(MOD_MASK_SHIFT, KC_CIRCUMFLEX, KC_UNDERSCORE),
-    &ko_make_basic(MOD_MASK_SHIFT, KC_GRAVE, KC_CIRCUMFLEX),
-    &ko_make_basic(MOD_MASK_SHIFT, KEY_UNDO, KEY_REDO),
-    &ko_make_basic(MOD_MASK_SHIFT, KC_DOUBLE_QUOTE, KC_QUOTE),
-    &ko_make_basic(MOD_MASK_SHIFT, LT(NAV, KC_BACKSPACE), KC_DELETE),
-    /* TODO: NOK */ &ko_make_basic(MOD_MASK_SHIFT, QK_CAPS_WORD_TOGGLE, KC_CAPS_LOCK),
+    /* modifier */
+    &ko_make_with_layers(MOD_MASK_SHIFT, QK_CAPS_WORD_TOGGLE, KC_CAPS_LOCK, (1 << BASE)), /* TODO: NOK */
+    &ko_make_with_layers(MOD_MASK_SHIFT, KEY_UNDO, KEY_REDO, (1 << BASE)),
+    &ko_make_with_layers(MOD_MASK_SHIFT, KC_DOT, KC_COLON, (1 << BASE) | (1 << NUM) | (1 << SYM)),
+    &ko_make_with_layers(MOD_MASK_SHIFT, KC_COMMA, KC_SEMICOLON, (1 << BASE) | (1 << NUM) | (1 << SYM)),
+    &ko_make_with_layers(MOD_MASK_SHIFT, KC_EXCLAIM, KC_QUESTION, (1 << BASE) | (1 << SYM)),
+    &ko_make_with_layers(MOD_MASK_SHIFT, KC_SLASH, KC_BACKSLASH, (1 << BASE) | (1 << SYM)),
+    &ko_make_with_layers(MOD_MASK_SHIFT, KC_EQUAL, KC_EQUAL, (1 << NUM) | (1 << SYM)),
+    &ko_make_with_layers(MOD_MASK_SHIFT, KC_DOUBLE_QUOTE, KC_QUOTE, (1 << SYM)),
+    &ko_make_with_layers(MOD_MASK_SHIFT, KC_GRAVE, KC_CIRCUMFLEX, (1 << SYM)),
+    /* modifier + function */
+    &ko_make_with_layers(MOD_MASK_SHIFT, MT(MOD_RALT, KC_EXCLAIM), KC_QUESTION, (1 << BASE)),
+    &ko_make_with_layers(MOD_MASK_SHIFT, LT(FUNFUN, KC_UNDERSCORE), KC_MINUS, (1 << BASE)),
+    &ko_make_with_layers(MOD_MASK_SHIFT, LT(NAV, KC_BACKSPACE), KC_DELETE, (1 << BASE)),
 };
 // clang-format on
 
@@ -270,15 +259,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
   // https://docs.qmk.fm/mod_tap#changing-tap-function
 
   switch (keycode) {
-    case MT(MOD_LSFT, KC_LEFT_PAREN):
-      if (record->tap.count && record->event.pressed) {
-        if (!(get_mods() & MOD_MASK_SHIFT)) {
-          tap_code16(KC_LEFT_PAREN);
-          return false;
-        }
-      }
-      break;
-    case MT(MOD_RALT, KC_EXCLAIM):
+    case MT(MOD_RALT, KC_EXCLAIM):  // BASE
       if (record->tap.count && record->event.pressed) {
         if (!(get_mods() & MOD_MASK_SHIFT)) {
           tap_code16(KC_EXCLAIM);
@@ -286,10 +267,29 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
         }
       }
       break;
-    case LT(FUNFUN, KC_UNDERSCORE):
+
+    case LT(FUNFUN, KC_UNDERSCORE):  // BASE
       if (record->tap.count && record->event.pressed) {
         if (!(get_mods() & MOD_MASK_SHIFT)) {
           tap_code16(KC_UNDERSCORE);
+          return false;
+        }
+      }
+      break;
+
+    case MT(MOD_LSFT, KC_GT):  // SYM
+      if (record->tap.count && record->event.pressed) {
+        if (!(get_mods() & MOD_MASK_SHIFT)) {
+          tap_code16(KC_GT);
+          return false;
+        }
+      }
+      break;
+
+    case MT(MOD_LSFT, KC_LEFT_PAREN):  // SYM
+      if (record->tap.count && record->event.pressed) {
+        if (!(get_mods() & MOD_MASK_SHIFT)) {
+          tap_code16(KC_LEFT_PAREN);
           return false;
         }
       }

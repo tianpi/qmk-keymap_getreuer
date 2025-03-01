@@ -7,7 +7,6 @@
 
 #include QMK_KEYBOARD_H
 #include "quantum.h"
-
 #include "tianpi.c"
 
 ////////////////////////////////////////////////////////////////
@@ -46,18 +45,18 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     QK_CAPS_WORD_TOGGLE,
 
     KC_Q,
-    KC_W,
-    KC_E,
+    MT(MOD_LGUI, KC_W),
+    LT(NUM, KC_E),
     KC_R,
     KC_F,
 
     KC_Y,
     KC_U,
     KC_I,
-    KC_O,
+    MT(MOD_LGUI, KC_O),
     KC_P,
 
-    TG(NUM),
+    TG(SYM),
 // ├─────┼─────┼─────┼─────┼─────┼─────┼─────┼─────┼─────┼─────┼─────┼─────┤
 // │ LM5 │ LM4 │ LM3 │ LM2 │ LM1 │ LM0 │ RM0 │ RM1 │ RM2 │ RM3 │ RM4 │ RM5 │
     KC_ENTER,
@@ -66,9 +65,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     MT(MOD_LCTL, KC_S),
     LT(SYM, KC_D),
     MT(MOD_LSFT, KC_T),
-    KC_G,
+    MT(MOD_MEH, KC_G),
 
-    KC_K,
+    MT(MOD_MEH, KC_K),
     MT(MOD_LSFT, KC_N),
     LT(SYM, KC_H),
     MT(MOD_LCTL, KC_L),
@@ -80,27 +79,27 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     KEY_UNDO,
 
     MT(MOD_RALT, KC_Z),
-    MT(MOD_LGUI, KC_X),
-    LT(NUM, KC_C),
+    KC_X,
+    KC_C,
     KC_V,
-    KC_B,
+    MT(MOD_HYPR, KC_B),
 
-    KC_J,
+    MT(MOD_HYPR, KC_J),
     KC_M,
-    KC_COMMA,
-    MT(MOD_LGUI, KC_DOT),
-    MT(MOD_RALT, KC_EXCLAIM),
+    KC_COMMA, /* SHIFT -> KC_COLON */
+    KC_DOT, /* SHIFT -> KC_SEMICOLON */
+    MT(MOD_RALT, KC_EXCLAIM), /* SHIFT -> KC_QUESTION */
 
     TO(BASE),
 // ╰─────┴─────┴─────┼─────┼─────┼─────┼─────┼─────┼─────┼─────┴─────┴─────╯
 //                   │ LH2 │ LH1 │ LH0 │ RH0 │ RH1 │ RH2 │
     KC_ESCAPE,
-    LT(NAV, KC_BACKSPACE),
+    LT(NAV, KC_BACKSPACE), /* SHIFT -> KC_DELETE */
     MT(MOD_LCTL, KC_TAB),
 
-    LT(FUNFUN, KC_UNDERSCORE),
+    LT(FUNFUN, KC_UNDERSCORE), /* SHIFT -> KC_MINUS */
     LT(FUN, KC_SPACE),
-    KC_SLASH
+    KC_SLASH /* SHIFT -> KC_BACKSLASH */
 //                   ╰─────┴─────┴─────┴─────┴─────┴─────╯
   ),
 
@@ -111,30 +110,30 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 // │ LT5 │ LT4 │ LT3 │ LT2 │ LT1 │ LT0 │ RT0 │ RT1 │ RT2 │ RT3 │ RT4 │ RT5 │
     _______,
 
-    XXXXXXX,
-    XXXXXXX,
-    XXXXXXX,
-    XXXXXXX,
-    XXXXXXX,
+    KC_LEFT_BRACKET,
+    KC_DOT,
+    XXXXXXX, /* LAYER -> THIS */
+    KC_COMMA,
+    KC_RIGHT_BRACKET,
 
     KC_ASTERISK,
     KC_7,
     KC_8,
     KC_9,
-    KC_COMMA,
+    KC_PLUS,
 
     _______,
 // ├─────┼─────┼─────┼─────┼─────┼─────┼─────┼─────┼─────┼─────┼─────┼─────┤
 // │ LM5 │ LM4 │ LM3 │ LM2 │ LM1 │ LM0 │ RM0 │ RM1 │ RM2 │ RM3 │ RM4 │ RM5 │
     _______,
 
+    KC_LEFT_PAREN,
+    KC_COLON,
     XXXXXXX,
-    XXXXXXX,
-    XXXXXXX,
-    KC_LSFT,
-    XXXXXXX,
+    KC_SEMICOLON,
+    KC_RIGHT_PAREN,
 
-    KC_PLUS,
+    KC_EQUAL, /* SHIFT -> KC_EQUAL */
     KC_4,
     KC_5,
     KC_6,
@@ -145,17 +144,17 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 // │ LB5 │ LB4 │ LB3 │ LB2 │ LB1 │ LB0 │ RB0 │ RB1 │ RB2 │ RB3 │ RB4 │ RB5 │
     _______,
 
+    KC_LEFT_CURLY_BRACE,
     XXXXXXX,
-    KC_DOT,
-    KC_COMMA,
-    KEY_PASTE,
     XXXXXXX,
+    XXXXXXX,
+    KC_RIGHT_CURLY_BRACE,
 
-    KC_LEFT_PAREN,
+    KC_SLASH,
     KC_1,
     KC_2,
     KC_3,
-    KC_DOT,
+    KC_MINUS,
     _______,
 // ╰─────┴─────┴─────┼─────┼─────┼─────┼─────┼─────┼─────┼─────┴─────┴─────╯
 //                   │ LH2 │ LH1 │ LH0 │ RH0 │ RH1 │ RH2 │
@@ -176,51 +175,51 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 // │ LT5 │ LT4 │ LT3 │ LT2 │ LT1 │ LT0 │ RT0 │ RT1 │ RT2 │ RT3 │ RT4 │ RT5 │
     _______,
 
-    KC_TILDE,
     KC_AT,
-    KC_HASH,
-    KC_DOLLAR,
-    KC_PERCENT,
-
+    KC_AMPERSAND,
+    KC_PLUS,
     KC_ASTERISK,
-    KC_MINUS,
-    KC_SLASH,
-    KC_PIPE,
-    KC_EQUAL,
+    KC_BACKSLASH,
+
+    KC_QUOTE,
+    KC_LEFT_CURLY_BRACE,
+    KC_HASH,
+    KC_RIGHT_CURLY_BRACE,
+    KC_DOUBLE_QUOTE, /* SHIFT -> KC_QUOTE */
 
     _______,
 // ├─────┼─────┼─────┼─────┼─────┼─────┼─────┼─────┼─────┼─────┼─────┼─────┤
 // │ LM5 │ LM4 │ LM3 │ LM2 │ LM1 │ LM0 │ RM0 │ RM1 │ RM2 │ RM3 │ RM4 │ RM5 │
     _______,
 
-    KC_GRAVE,
-    KC_ASTERISK,
-    KC_PLUS,
-    MT(MOD_LSFT, KC_EQUAL),
-    KC_DOT,
-
-    KC_SEMICOLON,
-    MT(MOD_LSFT, KC_LEFT_PAREN),
-    KC_LEFT_BRACKET,
-    KC_LEFT_CURLY_BRACE,
+    KC_GRAVE, /* SHIFT -> KC_CIRCUMFLEX */
     KC_LT,
+    KC_EQUAL, /* SHIFT -> KC_EQUAL */
+    MT(MOD_LSFT, KC_GT),
+    KC_CIRCUMFLEX,
+
+    KC_COLON,
+    MT(MOD_LSFT, KC_LEFT_PAREN),
+    KC_DOLLAR,
+    KC_RIGHT_PAREN,
+    KC_SEMICOLON,
 
     _______,
 // ├─────┼─────┼─────┼─────┼─────┼─────┼─────┼─────┼─────┼─────┼─────┼─────┤
 // │ LB5 │ LB4 │ LB3 │ LB2 │ LB1 │ LB0 │ RB0 │ RB1 │ RB2 │ RB3 │ RB4 │ RB5 │
     _______,
 
-    KC_EXCLAIM,
-    KC_LT,
-    KC_AMPERSAND,
-    KC_CIRCUMFLEX,
-    KC_COMMA,
+    KC_TILDE,
+    KC_PIPE,
+    KC_MINUS,
+    KC_SLASH, /* SHIFT -> KC_BACKSLASH */
+    KC_UNDERSCORE,
 
-    KC_DOUBLE_QUOTE,
-    KC_RIGHT_PAREN,
+    KC_QUESTION,
+    KC_LEFT_BRACKET,
+    KC_PERCENT,
     KC_RIGHT_BRACKET,
-    KC_RIGHT_CURLY_BRACE,
-    KC_GT,
+    KC_EXCLAIM, /* SHIFT -> KC_QUESTION */
 
     _______,
 // ╰─────┴─────┴─────┼─────┼─────┼─────┼─────┼─────┼─────┼─────┴─────┴─────╯
@@ -248,8 +247,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     KC_F10,
     KC_F13,
 
+    KC_CAPS_LOCK,
     KC_INSERT,
-    KC_PAUSE,
     KC_MEDIA_NEXT_TRACK,
     KC_AUDIO_VOL_UP,
     KC_BRIGHTNESS_UP,
@@ -283,7 +282,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     KC_F15,
 
     KC_SCROLL_LOCK,
-    XXXXXXX,
+    KC_PAUSE,
     KC_MEDIA_PREV_TRACK,
     KC_AUDIO_VOL_DOWN,
     KC_BRIGHTNESS_DOWN,
